@@ -92,6 +92,11 @@ COLORS = [
     "#b3bac7",
 ]
 
+DARK_RED_COLORS = [   
+    "#6d2c37",
+    "#481e25",
+    "#240f13",
+]
 @hook.subscribe.startup
 def run_on_startup():
     home = os.path.expanduser('~/.config/qtile/scripts/autostart.sh')
@@ -217,112 +222,148 @@ screens = [
                     this_current_screen_border=COLORS[3],
                     this_screen_border=COLORS[3],
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "chrome.svg"),
-                    mouse_callbacks={"Button1": open_chromium()},
-                    margin=1,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "thunderbird.svg"),
-                    mouse_callbacks={"Button1": open_thunderbird()},
-                    margin=3,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "terminal.svg"),
-                    mouse_callbacks={"Button1": open_terminal()},
-                    margin=0,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "folder.svg"),
-                    mouse_callbacks={"Button1": open_nemo()},
-                    margin=3,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "vscode.svg"),
-                    mouse_callbacks={"Button1": open_vscode()},
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "discord.svg"),
-                    mouse_callbacks={"Button1": open_discord()},
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "spotify.svg"),
-                    mouse_callbacks={"Button1": open_spotify()},
-                    margin=3,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "todoist.svg"),
-                    mouse_callbacks={"Button1": open_todoist()},
-                    margin=3,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "obsidian.svg"),
-                    mouse_callbacks={"Button1": open_obsidian()},
-                    margin=0,
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=IMAGE_PADDING,
+                widget.WidgetBox(
+                    text_closed="apps",
+                    text_open="[apps]",
+                    background=COLORS[3],
+                    widgets=[
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "chrome.svg"),
+                            mouse_callbacks={"Button1": open_chromium()},
+                            margin=1,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "thunderbird.svg"),
+                            mouse_callbacks={"Button1": open_thunderbird()},
+                            margin=3,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "terminal.svg"),
+                            mouse_callbacks={"Button1": open_terminal()},
+                            margin=0,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "folder.svg"),
+                            mouse_callbacks={"Button1": open_nemo()},
+                            margin=3,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "vscode.svg"),
+                            mouse_callbacks={"Button1": open_vscode()},
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "discord.svg"),
+                            mouse_callbacks={"Button1": open_discord()},
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "spotify.svg"),
+                            mouse_callbacks={"Button1": open_spotify()},
+                            margin=3,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "todoist.svg"),
+                            mouse_callbacks={"Button1": open_todoist()},
+                            margin=3,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "obsidian.svg"),
+                            mouse_callbacks={"Button1": open_obsidian()},
+                            margin=0,
+                            background=COLORS[0],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            padding=IMAGE_PADDING,
+                            background=COLORS[0],
+                        ),
+                    ],
                 ),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.Sep(
+                    linewidth=0,
+                ),
                 widget.Net(
                     format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}'
                 ),
-                widget.Sep(),
+                widget.Sep(
+                    linewidth=0,
+                ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "cpu.svg"),
                 ),
                 widget.CPU(
                     format=" {load_percent}%"
                 ),
-                widget.Sep(),
+                widget.Sep(
+                    linewidth=0,
+                ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "ram.svg"),
                 ),
                 widget.Memory(
                     format=" {MemPercent}%"
                 ),
-                widget.Sep(),
+                widget.Sep(
+                    linewidth=0,
+                ),
                 widget.Image(
                    filename=os.path.join(ICONS_DIR, "battery.svg"),
                 ),
                 widget.Battery(
                     format=" {percent:2.0%}"
                 ),
-                widget.Sep(),
+                widget.Sep(
+                    linewidth=0,
+                ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "weather.svg"),
                 ),
@@ -330,42 +371,66 @@ screens = [
                     location="Kraków",
                     format=" {temp}°C"
                 ),
-                widget.Sep(),
+                # widget.Sep(),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "clock.svg"),
+                    background=DARK_RED_COLORS[2],
+                ),
+                widget.Clock(
+                    format="%Y-%m-%d %H:%M",
+                    background=DARK_RED_COLORS[2],
+                ),
+                # widget.Sep(
+                #     linewith=0,
+                # ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "volume.svg"),
+                    background=DARK_RED_COLORS[1],
                 ),
                 widget.Volume(
-                    fmt="{}"
+                    fmt="{}",
+                    background=DARK_RED_COLORS[1],
                 ),
-                widget.Sep(),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "clock.svg")
+                widget.Sep(
+                    linewidth=0,
+                    background=DARK_RED_COLORS[1],
                 ),
-                widget.Clock(format="%Y-%m-%d %H:%M"),
-                widget.Sep(),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "keyboard.svg"),
+                    background=DARK_RED_COLORS[1],
                 ),
                 widget.KeyboardLayout(
                     configured_keyboards=["us", "pl"],
+                    background=DARK_RED_COLORS[1],
                 ),
-                widget.Sep(),
+                widget.Sep(
+                    linewidth=0,
+                    background=DARK_RED_COLORS[1],
+                ),
                 widget.CurrentLayoutIcon(
                     scale=0.7,
+                    background=DARK_RED_COLORS[1],
                 ),
-                widget.CurrentLayout(),
-                widget.Sep(),
+                widget.CurrentLayout(
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    background=DARK_RED_COLORS[1],
+                ),
                 widget.Image(
-                    filename=os.path.join(ICONS_DIR, "power.svg")
+                    filename=os.path.join(ICONS_DIR, "power.svg"),
+                    background=DARK_RED_COLORS[0],
                 ),
                 widget.QuickExit(
                     default_text="Exit",
                     countdown_format="{} s",
+                    background=DARK_RED_COLORS[0],
                 ),
             ],
             24,
             background=COLORS[0],
-            opacity=0.8,
+            opacity=0.7,
         ), 
         # right=bar.Gap(GAP_SIZE),
         # left=bar.Gap(GAP_SIZE),
