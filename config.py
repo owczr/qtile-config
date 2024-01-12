@@ -64,6 +64,15 @@ def open_discord():
 def open_nemo():
     return lazy.spawn("nemo")
 
+def open_spotify():
+    return lazy.spawn("spotify-launcher")
+
+def open_todoist():
+    return lazy.spawn("todoist")
+
+def open_obsidian():
+    return lazy.spawn("obsidian")
+
 COLORS = [
     "#04060c",
     "#4a586f",
@@ -172,7 +181,6 @@ layouts = [
         margin=GAP_SIZE
     ),
     layout.Max(),
-    # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
@@ -202,6 +210,7 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "arch-logo-white.png"),
                     mouse_callbacks={"Button1": open_rofi()},
+                    margin=1,
                 ),
                 widget.GroupBox(
                     highlight_method="line",
@@ -220,6 +229,7 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "thunderbird.svg"),
                     mouse_callbacks={"Button1": open_thunderbird()},
+                    margin=3,
                 ),
                 widget.Sep(
                     linewidth=0,
@@ -237,6 +247,7 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "folder.svg"),
                     mouse_callbacks={"Button1": open_nemo()},
+                    margin=3,
                 ),
                 widget.Sep(
                     linewidth=0,
@@ -253,6 +264,33 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "discord.svg"),
                     mouse_callbacks={"Button1": open_discord()},
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    padding=IMAGE_PADDING,
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "spotify.svg"),
+                    mouse_callbacks={"Button1": open_spotify()},
+                    margin=3,
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    padding=IMAGE_PADDING,
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "todoist.svg"),
+                    mouse_callbacks={"Button1": open_todoist()},
+                    margin=3,
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    padding=IMAGE_PADDING,
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "obsidian.svg"),
+                    mouse_callbacks={"Button1": open_obsidian()},
+                    margin=0,
                 ),
                 widget.Sep(
                     linewidth=0,
