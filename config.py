@@ -443,11 +443,19 @@ screens = [
                     background=DARK_RED_COLORS[2],
                 ),
                 widget.Image(
+                    filename=os.path.join(ICONS_DIR, "calendar.svg"),
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Clock(
+                    format="%Y-%m-%d",
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Image(
                     filename=os.path.join(ICONS_DIR, "clock.svg"),
                     background=DARK_RED_COLORS[1],
                 ),
                 widget.Clock(
-                    format="%Y-%m-%d %H:%M",
+                    format="%H:%M",
                     background=DARK_RED_COLORS[1],
                 ),
                 widget.Image(
