@@ -424,6 +424,20 @@ screens = [
                 widget.CurrentLayout(
                     background=DARK_RED_COLORS[2],
                 ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "timer.svg"),
+                    background=DARK_RED_COLORS[2],
+                ),
+                widget.Pomodoro(
+                    color_active="#ffffff",
+                    color_break="#ffffff",
+                    color_inactive="#ffffff",
+                    prefix_inactive="pomodoro",
+                    prefix_break="break",
+                    prefix_long_break="long break",
+                    prefix_paused="pause",
+                    background=DARK_RED_COLORS[2],
+                ),
                 widget.Sep(
                     linewidth=0,
                     background=DARK_RED_COLORS[2],
