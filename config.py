@@ -31,14 +31,23 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+
 mod = "mod4"
 alt = "mod1"
 terminal = guess_terminal()
+
 
 GAP_SIZE = 8
 BORDER_SIZE = 2
 WALLPAPER = "~/.config/qtile/wallpaper.jpg"
 ICONS_DIR = "~/Pictures/icons/"
+SCRIPTS_DIR = "~/.config/qtile/scripts"
+
+
+@hook.subscribe.startup
+def run_on_startup():
+    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "autostart.sh"))
+    subprocess.call([script])
 
 def open_chromium():
     return lazy.spawn("chromium")
@@ -73,6 +82,10 @@ def open_todoist():
 def open_obsidian():
     return lazy.spawn("obsidian")
 
+def open_wifi_menu():
+    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "rofi-wifi-menu.sh"))
+    return lambda : subprocess.call([script])
+
 COLORS = [
     "#04060c",
     "#4a586f",
@@ -97,10 +110,6 @@ DARK_RED_COLORS = [
     "#481e25",
     "#240f13",
 ]
-@hook.subscribe.startup
-def run_on_startup():
-    home = os.path.expanduser('~/.config/qtile/scripts/autostart.sh')
-    subprocess.call([home])
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -221,6 +230,9 @@ screens = [
                     highlight_method="line",
                     this_current_screen_border=COLORS[3],
                     this_screen_border=COLORS[3],
+                    other_current_screen_border=COLORS[8],
+                    other_screen_border=COLORS[8],
+                    disable_drag=True,
                 ),
                 widget.WidgetBox(
                     text_closed="apps",
@@ -328,12 +340,7 @@ screens = [
                 ),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.Sep(
-                    linewidth=0,
-                ),
-                widget.Net(
-                    format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}'
-                ),
+
                 widget.Sep(
                     linewidth=0,
                 ),
@@ -371,51 +378,62 @@ screens = [
                     location="Kraków",
                     format=" {temp}°C"
                 ),
-                # widget.Sep(),
+
                 widget.Image(
-                    filename=os.path.join(ICONS_DIR, "clock.svg"),
+                    filename=os.path.join(ICONS_DIR, "wifi.svg"),
+                    mouse_callbacks={"Button1": open_wifi_menu()},
                     background=DARK_RED_COLORS[2],
                 ),
-                widget.Clock(
-                    format="%Y-%m-%d %H:%M",
+                widget.Sep(
+                    linewidth=0,
                     background=DARK_RED_COLORS[2],
                 ),
-                # widget.Sep(
-                #     linewith=0,
-                # ),
+                widget.Net(
+                    format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                    background=DARK_RED_COLORS[2],
+                    mouse_callbacks={"Button1": open_wifi_menu()},
+                ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "volume.svg"),
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.Volume(
                     fmt="{}",
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.Sep(
                     linewidth=0,
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "keyboard.svg"),
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.KeyboardLayout(
                     configured_keyboards=["us", "pl"],
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.Sep(
                     linewidth=0,
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.CurrentLayoutIcon(
                     scale=0.7,
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.CurrentLayout(
-                    background=DARK_RED_COLORS[1],
+                    background=DARK_RED_COLORS[2],
                 ),
                 widget.Sep(
                     linewidth=0,
+                    background=DARK_RED_COLORS[2],
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "clock.svg"),
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Clock(
+                    format="%Y-%m-%d %H:%M",
                     background=DARK_RED_COLORS[1],
                 ),
                 widget.Image(
@@ -431,6 +449,12 @@ screens = [
             24,
             background=COLORS[0],
             opacity=0.7,
+            margin=[
+                GAP_SIZE,
+                GAP_SIZE,
+                0,
+                GAP_SIZE,
+            ],
         ), 
         # right=bar.Gap(GAP_SIZE),
         # left=bar.Gap(GAP_SIZE),
@@ -458,6 +482,7 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
+    border_focus=COLORS[3],
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
@@ -467,7 +492,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+    ],
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
