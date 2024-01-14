@@ -194,7 +194,9 @@ layouts = [
         border_width=BORDER_SIZE,
         margin=GAP_SIZE
     ),
-    layout.Max(),
+    layout.Max(
+        margin=GAP_SIZE,
+    ),
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
