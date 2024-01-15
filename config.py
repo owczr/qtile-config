@@ -212,7 +212,7 @@ layouts = [
 widget_defaults = dict(
     font="Noto Sans",
     fontsize=14,
-    padding=4,
+    padding=5,
     margin=2,
 )
 extension_defaults = widget_defaults.copy()
@@ -238,8 +238,8 @@ screens = [
                 ),
                 widget.WidgetBox(
                     fontsize=28,
-                    text_closed="󱓞 ",
-                    text_open="󱓞 ",
+                    text_closed="󱓞",
+                    text_open="󱓞",
                     background=COLORS[3],
                     widgets=[
                         widget.Image(
@@ -349,8 +349,8 @@ screens = [
                 ),
                 widget.WidgetBox(
                     fontsize=28,
-                    text_closed=" ",
-                    text_open=" ",
+                    text_closed="",
+                    text_open="",
                     close_button_location="right",
                     background=COLORS[0],
                     widgets=[
@@ -393,8 +393,8 @@ screens = [
                 widget.WidgetBox(
                     fontsize=28,
                     background=DARK_RED_COLORS[2],
-                    text_closed=" ",
-                    text_open=" ",
+                    text_closed="",
+                    text_open="",
                     close_button_location="right",
                     widgets=[
                         widget.Image(
