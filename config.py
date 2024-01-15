@@ -237,8 +237,9 @@ screens = [
                     disable_drag=True,
                 ),
                 widget.WidgetBox(
-                    text_closed="apps",
-                    text_open="[apps]",
+                    fontsize=28,
+                    text_closed="󱓞 ",
+                    text_open="󱓞 ",
                     background=COLORS[3],
                     widgets=[
                         widget.Image(
@@ -346,103 +347,120 @@ screens = [
                 widget.Sep(
                     linewidth=0,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "cpu.svg"),
+                widget.WidgetBox(
+                    fontsize=28,
+                    text_closed=" ",
+                    text_open=" ",
+                    close_button_location="right",
+                    background=COLORS[0],
+                    widgets=[
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "cpu.svg"),
+                        ),
+                        widget.CPU(
+                            format=" {load_percent}%"
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "ram.svg"),
+                        ),
+                        widget.Memory(
+                            format=" {MemPercent}%"
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                        ),
+                        widget.Image(
+                           filename=os.path.join(ICONS_DIR, "battery.svg"),
+                        ),
+                        widget.Battery(
+                            format=" {percent:2.0%}"
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "weather.svg"),
+                        ),
+                        widget.OpenWeather(
+                            location="Kraków",
+                            format=" {temp}°C"
+                        ),
+                    ]
                 ),
-                widget.CPU(
-                    format=" {load_percent}%"
-                ),
-                widget.Sep(
-                    linewidth=0,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "ram.svg"),
-                ),
-                widget.Memory(
-                    format=" {MemPercent}%"
-                ),
-                widget.Sep(
-                    linewidth=0,
-                ),
-                widget.Image(
-                   filename=os.path.join(ICONS_DIR, "battery.svg"),
-                ),
-                widget.Battery(
-                    format=" {percent:2.0%}"
-                ),
-                widget.Sep(
-                    linewidth=0,
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "weather.svg"),
-                ),
-                widget.OpenWeather(
-                    location="Kraków",
-                    format=" {temp}°C"
-                ),
-
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "wifi.svg"),
-                    mouse_callbacks={"Button1": open_wifi_menu()},
+                widget.WidgetBox(
+                    fontsize=28,
                     background=DARK_RED_COLORS[2],
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Net(
-                    format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-                    background=DARK_RED_COLORS[2],
-                    mouse_callbacks={"Button1": open_wifi_menu()},
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "volume.svg"),
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Volume(
-                    fmt="{}",
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "keyboard.svg"),
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.KeyboardLayout(
-                    configured_keyboards=["us", "pl"],
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.CurrentLayoutIcon(
-                    scale=0.7,
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.CurrentLayout(
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "timer.svg"),
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Pomodoro(
-                    color_active="#ffffff",
-                    color_break="#ffffff",
-                    color_inactive="#ffffff",
-                    prefix_inactive="pomodoro",
-                    prefix_break="break",
-                    prefix_long_break="long break",
-                    prefix_paused="pause",
-                    background=DARK_RED_COLORS[2],
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    background=DARK_RED_COLORS[2],
+                    text_closed=" ",
+                    text_open=" ",
+                    close_button_location="right",
+                    widgets=[
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "wifi.svg"),
+                            mouse_callbacks={"Button1": open_wifi_menu()},
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Net(
+                            format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                            background=DARK_RED_COLORS[2],
+                            mouse_callbacks={"Button1": open_wifi_menu()},
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "volume.svg"),
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Volume(
+                            fmt="{}",
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "keyboard.svg"),
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.KeyboardLayout(
+                            configured_keyboards=["us", "pl"],
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.CurrentLayoutIcon(
+                            scale=0.7,
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.CurrentLayout(
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Image(
+                            filename=os.path.join(ICONS_DIR, "timer.svg"),
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Pomodoro(
+                            color_active="#ffffff",
+                            color_break="#ffffff",
+                            color_inactive="#ffffff",
+                            prefix_inactive="pomodoro",
+                            prefix_break="break ",
+                            prefix_long_break="long break ",
+                            prefix_paused="pause ",
+                            background=DARK_RED_COLORS[2],
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            background=DARK_RED_COLORS[2],
+                        ),
+                    ],
                 ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "calendar.svg"),
