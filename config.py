@@ -343,7 +343,13 @@ screens = [
                 ),
                 widget.Prompt(),
                 widget.WindowName(),
-
+                widget.Notify(
+                    audiofile="~/Music/notification.mp3",
+                    background=COLORS[0],
+                    background_low=COLORS[0],
+                    background_urgent=COLORS[0],
+                ),
+                widget.StatusNotifier(),
                 widget.Sep(
                     linewidth=0,
                 ),
@@ -447,6 +453,7 @@ screens = [
                             background=DARK_RED_COLORS[2],
                         ),
                         widget.Pomodoro(
+                            notification_on=True,
                             color_active="#ffffff",
                             color_break="#ffffff",
                             color_inactive="#ffffff",
