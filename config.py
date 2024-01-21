@@ -82,9 +82,10 @@ def open_todoist():
 def open_obsidian():
     return lazy.spawn("obsidian")
 
-def open_wifi_menu():
-    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "rofi-wifi-menu.sh"))
-    return lambda : subprocess.call([script])
+def turn_off_laptop_screen():
+    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
+    subprocess.call([script])
+
 
 COLORS = [
     "#04060c",
@@ -361,6 +362,15 @@ screens = [
                     background=COLORS[0],
                     widgets=[
                         widget.Image(
+                            filename=os.path.join(ICONS_DIR, "wifi.svg"),
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                        ),
+                        widget.Net(
+                            format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                        ),
+                        widget.Image(
                             filename=os.path.join(ICONS_DIR, "cpu.svg"),
                         ),
                         widget.CPU(
@@ -403,20 +413,6 @@ screens = [
                     text_open="",
                     close_button_location="right",
                     widgets=[
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "wifi.svg"),
-                            mouse_callbacks={"Button1": open_wifi_menu()},
-                            background=DARK_RED_COLORS[2],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            background=DARK_RED_COLORS[2],
-                        ),
-                        widget.Net(
-                            format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-                            background=DARK_RED_COLORS[2],
-                            mouse_callbacks={"Button1": open_wifi_menu()},
-                        ),
                         widget.Image(
                             filename=os.path.join(ICONS_DIR, "volume.svg"),
                             background=DARK_RED_COLORS[2],
@@ -486,8 +482,9 @@ screens = [
                     background=DARK_RED_COLORS[1],
                 ),
                 widget.Image(
-                    filename=os.path.join(ICONS_DIR, "power.svg"),
+                    filename=os.path.join(ICONS_DIR, "exit.svg"),
                     background=DARK_RED_COLORS[0],
+                    margin=3,
                 ),
                 widget.QuickExit(
                     default_text="Exit",
@@ -505,13 +502,59 @@ screens = [
                 GAP_SIZE,
             ],
         ), 
-        # right=bar.Gap(GAP_SIZE),
-        # left=bar.Gap(GAP_SIZE),
-        # bottom=bar.Gap(GAP_SIZE),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
     ),
     Screen(
+        top=bar.Bar(
+            [
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "arch-logo-white.png"),
+                    mouse_callbacks={"Button1": open_rofi()},
+                    margin=1,
+                    background=COLORS[0],
+                ),
+                widget.WindowName(
+                    background=COLORS[0],
+                ),
+                widget.Spacer(
+                    bar.STRETCH,
+                ),
+                widget.GroupBox(
+                    highlight_method="line",
+                    this_current_screen_border=COLORS[3],
+                    this_screen_border=COLORS[3],
+                    other_current_screen_border=COLORS[8],
+                    other_screen_border=COLORS[8],
+                    disable_drag=True,
+                ),
+                widget.Spacer(
+                    bar.STRETCH,
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "clock.svg"),
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Clock(
+                    format="%H:%M",
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "power.svg"),
+                    background=DARK_RED_COLORS[0],
+                    mouse_callbacks={"Button1": turn_off_laptop_screen},
+                ),
+            ],
+            24,
+            background=COLORS[0],
+            opacity=0.7,
+            margin=[
+                GAP_SIZE,
+                GAP_SIZE,
+                0,
+                GAP_SIZE,
+            ],
+        ), 
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
     ),
