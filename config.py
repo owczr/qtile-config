@@ -392,7 +392,12 @@ screens = [
                            filename=os.path.join(ICONS_DIR, "battery.svg"),
                         ),
                         widget.Battery(
-                            format=" {percent:2.0%}"
+                            format="{char} {percent:2.0%}",
+                            notify_below=0.1,
+                            charge_char="󰶣",
+                            discharge_char="󰶡",
+                            empty_char="󰚌",
+                            full_char="󱐋",
                         ),
                         widget.Sep(
                             linewidth=0,
