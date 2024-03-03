@@ -343,7 +343,9 @@ screens = [
                     ],
                 ),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.WindowName(
+                    format="{name} {state}",
+                ),
                 widget.Notify(
                     audiofile="~/Music/notification.mp3",
                     background=COLORS[0],
@@ -388,20 +390,7 @@ screens = [
                         widget.Sep(
                             linewidth=0,
                         ),
-                        widget.Image(
-                           filename=os.path.join(ICONS_DIR, "battery.svg"),
-                        ),
-                        widget.Battery(
-                            format="{char} {percent:2.0%}",
-                            notify_below=0.1,
-                            charge_char="󰶣",
-                            discharge_char="󰶡",
-                            empty_char="󰚌",
-                            full_char="󱐋",
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                        ),
+
                         widget.Image(
                             filename=os.path.join(ICONS_DIR, "weather.svg"),
                         ),
@@ -485,6 +474,22 @@ screens = [
                 widget.Clock(
                     format="%H:%M",
                     background=DARK_RED_COLORS[1],
+                ),
+                widget.Image(
+                    filename=os.path.join(ICONS_DIR, "battery.svg"),
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Battery(
+                    format="{char} {percent:2.0%}",
+                    notify_below=10.0,
+                    charge_char="󰶣",
+                    discharge_char="󰶡",
+                    empty_char="󰚌",
+                    full_char="󱐋",
+                    background=DARK_RED_COLORS[1],
+                ),
+                widget.Sep(
+                    linewidth=0,
                 ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "exit.svg"),
