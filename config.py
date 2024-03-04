@@ -37,7 +37,7 @@ alt = "mod1"
 terminal = guess_terminal()
 
 
-GAP_SIZE = 8
+GAP_SIZE = 4
 BORDER_SIZE = 2
 WALLPAPER = "~/.config/qtile/wallpaper.jpg"
 ICONS_DIR = "~/Pictures/icons/"
@@ -506,14 +506,17 @@ screens = [
             background=COLORS[0],
             opacity=0.7,
             margin=[
+                GAP_SIZE * 2,
+                GAP_SIZE * 2,
                 GAP_SIZE,
-                GAP_SIZE,
-                0,
-                GAP_SIZE,
+                GAP_SIZE * 2,
             ],
         ), 
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
+        left=bar.Gap(size=GAP_SIZE),
+        right=bar.Gap(size=GAP_SIZE),
+        bottom=bar.Gap(size=GAP_SIZE),
     ),
     Screen(
         top=bar.Bar(
@@ -559,14 +562,17 @@ screens = [
             background=COLORS[0],
             opacity=0.7,
             margin=[
+                GAP_SIZE * 2,
+                GAP_SIZE * 2,
                 GAP_SIZE,
-                GAP_SIZE,
-                0,
-                GAP_SIZE,
+                GAP_SIZE * 2,
             ],
         ), 
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
+        left=bar.Gap(size=GAP_SIZE),
+        right=bar.Gap(size=GAP_SIZE),
+        bottom=bar.Gap(size=GAP_SIZE),
     ),
 ]
 
