@@ -12,3 +12,6 @@ xrandr --output eDP-1 --right-of DP-1-1
 xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" 315 1
 # touchpad tapping
 xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" 344 1
+
+# turn on blue light filter
+redshift -l 50.06143:19.93658 &

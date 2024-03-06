@@ -488,9 +488,6 @@ screens = [
                     full_char="󱐋",
                     background=DARK_RED_COLORS[1],
                 ),
-                widget.Sep(
-                    linewidth=0,
-                ),
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "exit.svg"),
                     background=DARK_RED_COLORS[0],
