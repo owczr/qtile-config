@@ -39,7 +39,7 @@ terminal = guess_terminal()
 
 GAP_SIZE = 4
 BORDER_SIZE = 2
-WALLPAPER = "~/.config/qtile/wallpaper.jpg"
+WALLPAPER = "~/.config/qtile/wallpaper.png"
 ICONS_DIR = "~/Pictures/icons/"
 SCRIPTS_DIR = "~/.config/qtile/scripts"
 
@@ -86,31 +86,18 @@ def turn_off_laptop_screen():
     script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
     subprocess.call([script])
 
-
-COLORS = [
-    "#04060c",
-    "#4a586f",
-    "#536179",
-    "#923b4a",
-    "#596986",
-    "#5c6388",
-    "#687691",
-    "#b3bac7",
-    "#7d828b",
-    "#4a586f",
-    "#536179",
-    "#923b4a",
-    "#596986",
-    "#5c6388",
-    "#687691",
-    "#b3bac7",
-]
-
-DARK_RED_COLORS = [   
-    "#6d2c37",
-    "#481e25",
-    "#240f13",
-]
+BACKGROUND = "#1e1e2e"
+FOREGROUND_LIGHT = "#cdd6f4"
+FOREGROUND_DARK = "#11111b"
+GRAY = "#6c7086"
+MAUVE = "#cba6f7"  # mauve
+RED = "#f38ba8"
+YELLOW = "#f9e2af"
+GREEN = "#a6e3a1"
+BLUE = "#89b4fa"
+ROSEWATER = "#f5e0dc"
+FLAMINGO = "#f2cdcd"
+ACCENT = BLUE
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -190,8 +177,8 @@ for i in groups:
 
 layouts = [
     layout.Columns(
-        border_focus_stack=[COLORS[1], COLORS[2]],
-        border_focus=COLORS[3],
+        border_focus_stack=[GRAY, GRAY],
+        border_focus=ACCENT,
         border_width=BORDER_SIZE,
         margin=GAP_SIZE
     ),
@@ -215,6 +202,7 @@ widget_defaults = dict(
     fontsize=14,
     padding=5,
     margin=2,
+    foreground=FOREGROUND_LIGHT,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -231,116 +219,12 @@ screens = [
                 ),
                 widget.GroupBox(
                     highlight_method="line",
-                    this_current_screen_border=COLORS[3],
-                    this_screen_border=COLORS[3],
-                    other_current_screen_border=COLORS[8],
-                    other_screen_border=COLORS[8],
+                    this_current_screen_border=ACCENT,
+                    this_screen_border=ACCENT,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
                     disable_drag=True,
-                ),
-                widget.WidgetBox(
-                    fontsize=28,
-                    text_closed="󱓞",
-                    text_open="󱓞",
-                    background=COLORS[3],
-                    widgets=[
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "chrome.svg"),
-                            mouse_callbacks={"Button1": open_chromium()},
-                            margin=1,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "thunderbird.svg"),
-                            mouse_callbacks={"Button1": open_thunderbird()},
-                            margin=3,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "terminal.svg"),
-                            mouse_callbacks={"Button1": open_terminal()},
-                            margin=0,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "folder.svg"),
-                            mouse_callbacks={"Button1": open_nemo()},
-                            margin=3,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "vscode.svg"),
-                            mouse_callbacks={"Button1": open_vscode()},
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "discord.svg"),
-                            mouse_callbacks={"Button1": open_discord()},
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "spotify.svg"),
-                            mouse_callbacks={"Button1": open_spotify()},
-                            margin=3,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "todoist.svg"),
-                            mouse_callbacks={"Button1": open_todoist()},
-                            margin=3,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "obsidian.svg"),
-                            mouse_callbacks={"Button1": open_obsidian()},
-                            margin=0,
-                            background=COLORS[0],
-                        ),
-                        widget.Sep(
-                            linewidth=0,
-                            padding=IMAGE_PADDING,
-                            background=COLORS[0],
-                        ),
-                    ],
+                    foreground=FOREGROUND_LIGHT,
                 ),
                 widget.Prompt(),
                 widget.WindowName(
@@ -348,9 +232,9 @@ screens = [
                 ),
                 widget.Notify(
                     audiofile="~/Music/notification.mp3",
-                    background=COLORS[0],
-                    background_low=COLORS[0],
-                    background_urgent=COLORS[0],
+                    background=BACKGROUND,
+                    background_low=BACKGROUND,
+                    background_urgent=BACKGROUND,
                 ),
                 widget.StatusNotifier(),
                 widget.Sep(
@@ -361,108 +245,128 @@ screens = [
                     text_closed="",
                     text_open="",
                     close_button_location="right",
-                    background=COLORS[0],
+                    foreground=FLAMINGO,
                     widgets=[
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "wifi.svg"),
+                        widget.TextBox(
+                            "",
+                            foreground=FLAMINGO,
+                            fontsize=32,
                         ),
                         widget.Sep(
                             linewidth=0,
+                            foreground=FLAMINGO,
                         ),
                         widget.Net(
                             format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                            foreground=FLAMINGO,
                         ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "cpu.svg"),
+                        widget.TextBox(
+                            "",
+                            foreground=FLAMINGO,
+                            fontsize=32,
                         ),
                         widget.CPU(
-                            format=" {load_percent}%"
+                            format=" {load_percent}%",
+                            foreground=FLAMINGO,
                         ),
                         widget.Sep(
                             linewidth=0,
+                            foreground=FLAMINGO,
                         ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "ram.svg"),
+                        widget.TextBox(
+                            "",
+                            foreground=FLAMINGO,
+                            fontsize=32,
                         ),
                         widget.Memory(
-                            format=" {MemPercent}%"
+                            format=" {MemPercent}%",
+                            foreground=FLAMINGO,
                         ),
                         widget.Sep(
                             linewidth=0,
+                            foreground=FLAMINGO,
                         ),
 
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "weather.svg"),
+                        widget.TextBox(
+                            "󰖙",
+                            foreground=FLAMINGO,
+                            fontsize=32,
                         ),
                         widget.OpenWeather(
                             location="Kraków",
-                            format=" {temp}°C"
+                            format=" {temp}°C",
+                            foreground=FLAMINGO,
                         ),
                     ]
                 ),
                 widget.WidgetBox(
                     fontsize=28,
-                    background=DARK_RED_COLORS[2],
+                    foreground=ROSEWATER,
                     text_closed="",
                     text_open="",
                     close_button_location="right",
                     widgets=[
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "volume.svg"),
-                            background=DARK_RED_COLORS[2],
+                        widget.TextBox(
+                            "󰕾",
+                            foreground=ROSEWATER,
+                            fontsize=32,
                         ),
                         widget.Volume(
                             fmt="{}",
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
                         widget.Sep(
                             linewidth=0,
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
-                        widget.Image(
-                            filename=os.path.join(ICONS_DIR, "keyboard.svg"),
-                            background=DARK_RED_COLORS[2],
+                        widget.TextBox(
+                            "󰌌",
+                            fontsize=32,
+                            foreground=ROSEWATER,
                         ),
                         widget.KeyboardLayout(
                             configured_keyboards=["us", "pl"],
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
                         widget.Sep(
                             linewidth=0,
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
-                        widget.CurrentLayoutIcon(
-                            scale=0.7,
-                            background=DARK_RED_COLORS[2],
+                        widget.TextBox(
+                            "",
+                            fontsize=28,
+                            foreground=ROSEWATER,
                         ),
                         widget.CurrentLayout(
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
                         widget.Sep(
                             linewidth=0,
-                            background=DARK_RED_COLORS[2],
+                            foreground=ROSEWATER,
                         ),
                     ],
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "calendar.svg"),
-                    background=DARK_RED_COLORS[1],
+                widget.TextBox(
+                    "󰃭",
+                    foreground=MAUVE,
+                    fontsize=28,
                 ),
                 widget.Clock(
                     format="%Y-%m-%d",
-                    background=DARK_RED_COLORS[1],
+                    foreground=MAUVE,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "clock.svg"),
-                    background=DARK_RED_COLORS[1],
+                widget.TextBox(
+                    "󰥔",
+                    foreground=GREEN,
+                    fontsize=28,
                 ),
                 widget.Clock(
                     format="%H:%M",
-                    background=DARK_RED_COLORS[1],
+                    foreground=GREEN,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "battery.svg"),
-                    background=DARK_RED_COLORS[1],
+                widget.TextBox(
+                    "󰁹",
+                    foreground=YELLOW,
                 ),
                 widget.Battery(
                     format="{char} {percent:2.0%}",
@@ -471,22 +375,23 @@ screens = [
                     discharge_char="󰶡",
                     empty_char="󰚌",
                     full_char="󱐋",
-                    background=DARK_RED_COLORS[1],
+                    foreground=YELLOW,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "exit.svg"),
-                    background=DARK_RED_COLORS[0],
+                widget.TextBox(
+                    "󰐥",
+                    foreground=RED,
                     margin=3,
+                    fontsize=28,
                 ),
                 widget.QuickExit(
                     default_text="Exit",
                     countdown_format="{} s",
-                    background=DARK_RED_COLORS[0],
+                    foreground=RED,
                 ),
             ],
-            24,
-            background=COLORS[0],
-            opacity=0.7,
+            28,
+            background=BACKGROUND,
+            opacity=0.9,
             margin=[
                 GAP_SIZE * 2,
                 GAP_SIZE * 2,
@@ -506,43 +411,56 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "arch-logo-white.png"),
                     mouse_callbacks={"Button1": open_rofi()},
-                    margin=1,
-                    background=COLORS[0],
+                    background=BACKGROUND,
                 ),
                 widget.WindowName(
-                    background=COLORS[0],
+                    background=BACKGROUND,
                 ),
                 widget.Spacer(
                     bar.STRETCH,
                 ),
                 widget.GroupBox(
                     highlight_method="line",
-                    this_current_screen_border=COLORS[3],
-                    this_screen_border=COLORS[3],
-                    other_current_screen_border=COLORS[8],
-                    other_screen_border=COLORS[8],
+                    this_current_screen_border=ACCENT,
+                    this_screen_border=ACCENT,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
                     disable_drag=True,
                 ),
                 widget.Spacer(
                     bar.STRETCH,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "clock.svg"),
-                    background=DARK_RED_COLORS[1],
+                widget.TextBox(
+                    "󰥔",
+                    foreground=GREEN,
                 ),
                 widget.Clock(
                     format="%H:%M",
-                    background=DARK_RED_COLORS[1],
+                    foreground=GREEN,
                 ),
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "power.svg"),
-                    background=DARK_RED_COLORS[0],
+                widget.TextBox(
+                    "󰁹",
+                    foreground=YELLOW,
+                ),
+                widget.Battery(
+                    format="{char} {percent:2.0%}",
+                    notify_below=10.0,
+                    charge_char="󰶣",
+                    discharge_char="󰶡",
+                    empty_char="󰚌",
+                    full_char="󱐋",
+                    foreground=YELLOW,
+                ),
+                widget.TextBox(
+                    "󰍹",
+                    foreground=RED,
+                    fontsize=28,
                     mouse_callbacks={"Button1": turn_off_laptop_screen},
                 ),
             ],
-            24,
-            background=COLORS[0],
-            opacity=0.7,
+            28,
+            background=BACKGROUND,
+            opacity=0.9,
             margin=[
                 GAP_SIZE * 2,
                 GAP_SIZE * 2,
@@ -572,7 +490,7 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_focus=COLORS[3],
+    border_focus=ACCENT,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
