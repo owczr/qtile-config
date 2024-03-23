@@ -225,6 +225,10 @@ screens = [
                     other_screen_border=GRAY,
                     disable_drag=True,
                     foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                ),
+                widget.StatusNotifier(
+                    icon_size=20,
                 ),
                 widget.Prompt(),
                 widget.WindowName(
@@ -236,7 +240,6 @@ screens = [
                     background_low=BACKGROUND,
                     background_urgent=BACKGROUND,
                 ),
-                widget.StatusNotifier(),
                 widget.Sep(
                     linewidth=0,
                 ),
@@ -426,6 +429,8 @@ screens = [
                     other_current_screen_border=GRAY,
                     other_screen_border=GRAY,
                     disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
                 ),
                 widget.Spacer(
                     bar.STRETCH,
