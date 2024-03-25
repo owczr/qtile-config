@@ -149,24 +149,26 @@ keys = [
     Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker")
 ]
 
-groups = [Group(i) for i in "123456789"]
+# groups = [Group(i) for i in ]
+groups = [Group(i) for i in ["󰊯", "", "", "", "", "","󰍥", "", ""]]
+group_hotkeys = "123456789"
 
-for i in groups:
+for g, k in zip(groups, group_hotkeys):
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                k,
+                lazy.group[g.name].toscreen(),
+                desc="Switch to group {}".format(g.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                k,
+                lazy.window.togroup(g.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(g.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -198,8 +200,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Noto Sans",
-    fontsize=14,
+    font="NotoSans Nerd Font",
+    fontsize=16,
     padding=5,
     margin=2,
     foreground=FOREGROUND_LIGHT,
@@ -215,10 +217,10 @@ screens = [
                 widget.Image(
                     filename=os.path.join(ICONS_DIR, "arch-logo-white.png"),
                     mouse_callbacks={"Button1": open_rofi()},
-                    margin=1,
+                    margin=5,
                 ),
                 widget.GroupBox(
-                    highlight_method="line",
+                    highlight_method="text",
                     this_current_screen_border=ACCENT,
                     this_screen_border=ACCENT,
                     other_current_screen_border=GRAY,
@@ -228,7 +230,6 @@ screens = [
                     active=FOREGROUND_LIGHT,
                 ),
                 widget.StatusNotifier(
-                    icon_size=20,
                 ),
                 widget.Prompt(),
                 widget.WindowName(
@@ -244,7 +245,6 @@ screens = [
                     linewidth=0,
                 ),
                 widget.WidgetBox(
-                    fontsize=28,
                     text_closed="",
                     text_open="",
                     close_button_location="right",
@@ -253,7 +253,6 @@ screens = [
                         widget.TextBox(
                             "",
                             foreground=FLAMINGO,
-                            fontsize=32,
                         ),
                         widget.Sep(
                             linewidth=0,
@@ -266,7 +265,6 @@ screens = [
                         widget.TextBox(
                             "",
                             foreground=FLAMINGO,
-                            fontsize=32,
                         ),
                         widget.CPU(
                             format=" {load_percent}%",
@@ -279,7 +277,6 @@ screens = [
                         widget.TextBox(
                             "",
                             foreground=FLAMINGO,
-                            fontsize=32,
                         ),
                         widget.Memory(
                             format=" {MemPercent}%",
@@ -293,7 +290,6 @@ screens = [
                         widget.TextBox(
                             "󰖙",
                             foreground=FLAMINGO,
-                            fontsize=32,
                         ),
                         widget.OpenWeather(
                             location="Kraków",
@@ -303,7 +299,6 @@ screens = [
                     ]
                 ),
                 widget.WidgetBox(
-                    fontsize=28,
                     foreground=ROSEWATER,
                     text_closed="",
                     text_open="",
@@ -312,7 +307,6 @@ screens = [
                         widget.TextBox(
                             "󰕾",
                             foreground=ROSEWATER,
-                            fontsize=32,
                         ),
                         widget.Volume(
                             fmt="{}",
@@ -324,7 +318,6 @@ screens = [
                         ),
                         widget.TextBox(
                             "󰌌",
-                            fontsize=32,
                             foreground=ROSEWATER,
                         ),
                         widget.KeyboardLayout(
@@ -337,7 +330,6 @@ screens = [
                         ),
                         widget.TextBox(
                             "",
-                            fontsize=28,
                             foreground=ROSEWATER,
                         ),
                         widget.CurrentLayout(
@@ -352,7 +344,6 @@ screens = [
                 widget.TextBox(
                     "󰃭",
                     foreground=MAUVE,
-                    fontsize=28,
                 ),
                 widget.Clock(
                     format="%Y-%m-%d",
@@ -361,7 +352,6 @@ screens = [
                 widget.TextBox(
                     "󰥔",
                     foreground=GREEN,
-                    fontsize=28,
                 ),
                 widget.Clock(
                     format="%H:%M",
@@ -384,7 +374,6 @@ screens = [
                     "󰐥",
                     foreground=RED,
                     margin=3,
-                    fontsize=28,
                 ),
                 widget.QuickExit(
                     default_text="Exit",
@@ -392,7 +381,7 @@ screens = [
                     foreground=RED,
                 ),
             ],
-            28,
+            32,
             background=BACKGROUND,
             opacity=0.9,
             margin=[
@@ -416,14 +405,8 @@ screens = [
                     mouse_callbacks={"Button1": open_rofi()},
                     background=BACKGROUND,
                 ),
-                widget.WindowName(
-                    background=BACKGROUND,
-                ),
-                widget.Spacer(
-                    bar.STRETCH,
-                ),
                 widget.GroupBox(
-                    highlight_method="line",
+                    highlight_method="text",
                     this_current_screen_border=ACCENT,
                     this_screen_border=ACCENT,
                     other_current_screen_border=GRAY,
@@ -431,6 +414,9 @@ screens = [
                     disable_drag=True,
                     foreground=FOREGROUND_LIGHT,
                     active=FOREGROUND_LIGHT,
+                ),
+                widget.WindowName(
+                    background=BACKGROUND,
                 ),
                 widget.Spacer(
                     bar.STRETCH,
@@ -459,11 +445,10 @@ screens = [
                 widget.TextBox(
                     "󰍹",
                     foreground=RED,
-                    fontsize=28,
                     mouse_callbacks={"Button1": turn_off_laptop_screen},
                 ),
             ],
-            28,
+            32,
             background=BACKGROUND,
             opacity=0.9,
             margin=[
