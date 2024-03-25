@@ -89,14 +89,17 @@ def turn_off_laptop_screen():
 BACKGROUND = "#1e1e2e"
 FOREGROUND_LIGHT = "#cdd6f4"
 FOREGROUND_DARK = "#11111b"
-GRAY = "#6c7086"
-MAUVE = "#cba6f7"  # mauve
+GRAY = "#313244"
+MAUVE = "#cba6f7"
 RED = "#f38ba8"
 YELLOW = "#f9e2af"
 GREEN = "#a6e3a1"
 BLUE = "#89b4fa"
 ROSEWATER = "#f5e0dc"
 FLAMINGO = "#f2cdcd"
+PINK = "#f5c2e7"
+SKY = "#89dceb"
+PEACH = "#fab387"
 ACCENT = BLUE
 
 keys = [
@@ -144,29 +147,30 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([alt], "space", open_rofi(), desc="Spawn Rofi"),
     Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker")
 ]
 
-# groups = [Group(i) for i in ]
-groups = [Group(i) for i in ["󰊯", "", "", "", "", "","󰍥", "", ""]]
-group_hotkeys = "123456789"
-
-for g, k in zip(groups, group_hotkeys):
+groups = [
+    Group(name=name, label=label)
+    for name, label 
+    in zip("123456789", ["󰮯", "", "", "", "", "󰊠","󰊠", "󰊠", "󰊠"])
+]
+for g in groups:
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                k,
+                g.name,
                 lazy.group[g.name].toscreen(),
                 desc="Switch to group {}".format(g.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                k,
+                g.name,
                 lazy.window.togroup(g.name, switch_group=True),
                 desc="Switch to & move focused window to group {}".format(g.name),
             ),
@@ -214,20 +218,87 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.Image(
-                    filename=os.path.join(ICONS_DIR, "arch-logo-white.png"),
+                widget.Sep(
+                    linewidth=0,
+                ),
+                widget.TextBox(
+                    "󰣇",
                     mouse_callbacks={"Button1": open_rofi()},
-                    margin=5,
+                    foreground=ROSEWATER,
+                    fontsize=24,
+                    margin=0,
                 ),
                 widget.GroupBox(
                     highlight_method="text",
-                    this_current_screen_border=ACCENT,
-                    this_screen_border=ACCENT,
+                    this_current_screen_border=YELLOW,
+                    this_screen_border=YELLOW,
                     other_current_screen_border=GRAY,
                     other_screen_border=GRAY,
                     disable_drag=True,
                     foreground=FOREGROUND_LIGHT,
                     active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["1"],
+                ),
+                widget.GroupBox(
+                    highlight_method="text",
+                    this_current_screen_border=ROSEWATER,
+                    this_screen_border=ROSEWATER,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
+                    disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["2", "3", "4", "5"],
+                ),
+                widget.GroupBox(
+                    highlight_method="text",
+                    this_current_screen_border=RED,
+                    this_screen_border=RED,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
+                    disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["6"],
+                ),
+                widget.GroupBox(
+                    highlight_method="text",
+                    this_current_screen_border=PEACH,
+                    this_screen_border=PEACH,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
+                    disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["7"],
+                ),
+                widget.GroupBox(
+                    highlight_method="text",
+                    this_current_screen_border=SKY,
+                    this_screen_border=SKY,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
+                    disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["8"],
+                ),
+                widget.GroupBox(
+                    highlight_method="text",
+                    this_current_screen_border=PINK,
+                    this_screen_border=PINK,
+                    other_current_screen_border=GRAY,
+                    other_screen_border=GRAY,
+                    disable_drag=True,
+                    foreground=FOREGROUND_LIGHT,
+                    active=FOREGROUND_LIGHT,
+                    inactive=GRAY,
+                    visible_groups=["9"],
                 ),
                 widget.StatusNotifier(
                 ),
@@ -379,6 +450,9 @@ screens = [
                     default_text="Exit",
                     countdown_format="{} s",
                     foreground=RED,
+                ),
+                widget.Sep(
+                    linewidth=0,
                 ),
             ],
             32,
