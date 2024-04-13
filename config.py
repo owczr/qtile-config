@@ -467,9 +467,16 @@ screens = [
                     format="%Y-%m-%d",
                     foreground=MAUVE,
                 ),
-                widget.TextBox(
-                    "󰥔",
-                    foreground=GREEN,
+                widget.AnalogueClock(
+                    face_shape="circle",
+                    face_background=GREEN,
+                    face_border_colour=GREEN,
+                    hour_colour=BACKGROUND,
+                    hour_size=1,
+                    minute_colour=BACKGROUND,
+                    minute_size=1,
+                    margin=12,
+                    adjust_y=-5,
                 ),
                 widget.Clock(
                     format="%H:%M",
