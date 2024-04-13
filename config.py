@@ -26,7 +26,7 @@
 import os
 import subprocess
 
-from libqtile import backend, bar, layout, hook
+from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -475,9 +475,14 @@ screens = [
                     format="%H:%M",
                     foreground=GREEN,
                 ),
-                widget.TextBox(
-                    "󰁹",
-                    foreground=YELLOW,
+                widget.UPowerWidget(
+                    border_colour=YELLOW,
+                    border_charge_colour=YELLOW,
+                    border_critical_colour=RED,
+                    fill_low=PEACH,
+                    fill_normal=YELLOW,
+                    fill_critical=RED,
+                    fill_charge=FLAMINGO,
                 ),
                 widget.Battery(
                     format="{char} {percent:2.0%}",
