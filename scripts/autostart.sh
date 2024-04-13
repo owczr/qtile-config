@@ -15,3 +15,6 @@ xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" 344 1
 
 # turn on blue light filter
 redshift -l 50.06143:19.93658 &
+
+# start dunst for notifications
+dunst &
