@@ -448,9 +448,10 @@ screens = [
                             linewidth=0,
                             foreground=ROSEWATER,
                         ),
-                        widget.TextBox(
-                            "",
+                        widget.CurrentLayoutIcon(
+                            use_mask=True,
                             foreground=ROSEWATER,
+                            scale=0.5,
                         ),
                         widget.CurrentLayout(
                             foreground=ROSEWATER,
