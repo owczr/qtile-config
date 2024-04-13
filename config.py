@@ -369,9 +369,11 @@ screens = [
                     close_button_location="right",
                     foreground=FLAMINGO,
                     widgets=[
-                        widget.TextBox(
-                            "",
-                            foreground=FLAMINGO,
+                        widget.WiFiIcon(
+                            active_colour=FLAMINGO,
+                            disconnected_colour=FLAMINGO,
+                            inactive_colour=FLAMINGO,
+                            padding_y=8,
                         ),
                         widget.Sep(
                             linewidth=0,
