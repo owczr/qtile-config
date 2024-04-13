@@ -246,7 +246,8 @@ extension_defaults = widget_defaults.copy()
 IMAGE_PADDING = 5
 
 
-def create_group_boxes():
+def create_group_boxes() -> list:
+    """Returns a list with GroupBox widgets in Pacman style"""
     return [
         widget.GroupBox(
             highlight_method="text",
@@ -323,6 +324,32 @@ def create_group_boxes():
     ]
 
 
+def create_spacer() -> list:
+    """Returns the spacer with added left and right decorations"""
+    return [
+        widget.TextBox(
+            " ",
+            background=BACKGROUND,
+            decorations=[PowerLineDecoration(path="rounded_right")],
+        ),
+        widget.TextBox(
+            " ",
+            background=MANTLE,
+            decorations=[PowerLineDecoration(path="rounded_right")],
+        ),
+        widget.Spacer(
+            bar.STRETCH,
+            background=CRUST,
+            decorations=[PowerLineDecoration(path="rounded_left")],
+        ),
+        widget.TextBox(
+            " ",
+            background=MANTLE,
+            decorations=[PowerLineDecoration(path="rounded_left")],
+        ),
+    ]
+
+
 screens = [
     Screen(
         top=bar.Bar(
@@ -339,27 +366,7 @@ screens = [
                 ),
                 *create_group_boxes(),
                 widget.StatusNotifier(),
-                widget.TextBox(
-                    " ",
-                    background=BACKGROUND,
-                    decorations=[PowerLineDecoration(path="rounded_right")],
-                ),
-                widget.TextBox(
-                    " ",
-                    background=MANTLE,
-                    decorations=[PowerLineDecoration(path="rounded_right")],
-                ),
-                widget.Prompt(background=CRUST),
-                widget.Spacer(
-                    bar.STRETCH,
-                    background=CRUST,
-                    decorations=[PowerLineDecoration(path="rounded_left")],
-                ),
-                widget.TextBox(
-                    " ",
-                    background=MANTLE,
-                    decorations=[PowerLineDecoration(path="rounded_left")],
-                ),
+                *create_spacer(),
                 widget.Sep(
                     linewidth=0,
                 ),
@@ -547,9 +554,7 @@ screens = [
                     margin=0,
                 ),
                 *create_group_boxes(),
-                widget.Spacer(
-                    bar.STRETCH,
-                ),
+                *create_spacer(),
                 widget.TextBox(
                     "󰥔",
                     foreground=GREEN,
