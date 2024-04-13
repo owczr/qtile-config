@@ -26,10 +26,12 @@
 import os
 import subprocess
 
-from libqtile import bar, layout, widget, hook
+from libqtile import backend, bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtile_extras import widget
+from qtile_extras.widget.decorations import PowerLineDecoration
 
 
 mod = "mod4"
@@ -49,43 +51,58 @@ def run_on_startup():
     script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "autostart.sh"))
     subprocess.call([script])
 
+
 def open_chromium():
     return lazy.spawn("chromium")
+
 
 def open_rofi():
     return lazy.spawn("rofi -show drun -show-icons")
 
+
 def open_rofimoji():
     return lazy.spawn("rofimoji -a clipboard")
+
 
 def open_terminal():
     return lazy.spawn("alacritty")
 
+
 def open_thunderbird():
     return lazy.spawn("thunderbird")
+
 
 def open_vscode():
     return lazy.spawn("codium")
 
+
 def open_discord():
     return lazy.spawn("discord")
+
 
 def open_nemo():
     return lazy.spawn("nemo")
 
+
 def open_spotify():
     return lazy.spawn("spotify-launcher")
+
 
 def open_todoist():
     return lazy.spawn("todoist")
 
+
 def open_obsidian():
     return lazy.spawn("obsidian")
+
 
 def turn_off_laptop_screen():
     script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
     subprocess.call([script])
 
+
+CRUST = "#11111b"
+MANTLE = "#181825"
 BACKGROUND = "#1e1e2e"
 FOREGROUND_LIGHT = "#cdd6f4"
 FOREGROUND_DARK = "#11111b"
@@ -113,14 +130,23 @@ keys = [
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key(
+        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
+    ),
+    Key(
+        [mod, "shift"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Move window to the right",
+    ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key(
+        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
+    ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -144,18 +170,22 @@ keys = [
         lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused window",
     ),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+    Key(
+        [mod],
+        "t",
+        lazy.window.toggle_floating(),
+        desc="Toggle floating on the focused window",
+    ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([alt], "space", open_rofi(), desc="Spawn Rofi"),
-    Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker")
+    Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker"),
 ]
 
 groups = [
     Group(name=name, label=label)
-    for name, label 
-    in zip("123456789", ["󰮯", "", "", "", "", "󰊠","󰊠", "󰊠", "󰊠"])
+    for name, label in zip("123456789", ["󰮯", "", "", "", "", "󰊠", "󰊠", "󰊠", "󰊠"])
 ]
 for g in groups:
     keys.extend(
@@ -186,7 +216,7 @@ layouts = [
         border_focus_stack=[GRAY, GRAY],
         border_focus=ACCENT,
         border_width=BORDER_SIZE,
-        margin=GAP_SIZE
+        margin=GAP_SIZE,
     ),
     layout.Max(
         margin=GAP_SIZE,
@@ -209,10 +239,12 @@ widget_defaults = dict(
     padding=5,
     margin=2,
     foreground=FOREGROUND_LIGHT,
+    background=BACKGROUND,
 )
 extension_defaults = widget_defaults.copy()
 
 IMAGE_PADDING = 5
+
 
 def create_group_boxes():
     return [
@@ -290,6 +322,7 @@ def create_group_boxes():
         ),
     ]
 
+
 screens = [
     Screen(
         top=bar.Bar(
@@ -305,17 +338,27 @@ screens = [
                     margin=0,
                 ),
                 *create_group_boxes(),
-                widget.StatusNotifier(
-                ),
-                widget.Prompt(),
-                widget.WindowName(
-                    format="{name} {state}",
-                ),
-                widget.Notify(
-                    audiofile="~/Music/notification.mp3",
+                widget.StatusNotifier(),
+                widget.TextBox(
+                    " ",
                     background=BACKGROUND,
-                    background_low=BACKGROUND,
-                    background_urgent=BACKGROUND,
+                    decorations=[PowerLineDecoration(path="rounded_right")],
+                ),
+                widget.TextBox(
+                    " ",
+                    background=MANTLE,
+                    decorations=[PowerLineDecoration(path="rounded_right")],
+                ),
+                widget.Prompt(background=CRUST),
+                widget.Spacer(
+                    bar.STRETCH,
+                    background=CRUST,
+                    decorations=[PowerLineDecoration(path="rounded_left")],
+                ),
+                widget.TextBox(
+                    " ",
+                    background=MANTLE,
+                    decorations=[PowerLineDecoration(path="rounded_left")],
                 ),
                 widget.Sep(
                     linewidth=0,
@@ -335,7 +378,7 @@ screens = [
                             foreground=FLAMINGO,
                         ),
                         widget.Net(
-                            format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                            format="{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}",
                             foreground=FLAMINGO,
                         ),
                         widget.TextBox(
@@ -362,7 +405,6 @@ screens = [
                             linewidth=0,
                             foreground=FLAMINGO,
                         ),
-
                         widget.TextBox(
                             "󰖙",
                             foreground=FLAMINGO,
@@ -372,7 +414,7 @@ screens = [
                             format=" {temp}°C",
                             foreground=FLAMINGO,
                         ),
-                    ]
+                    ],
                 ),
                 widget.WidgetBox(
                     foreground=ROSEWATER,
@@ -469,7 +511,7 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
-        ), 
+        ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
         left=bar.Gap(size=GAP_SIZE),
@@ -490,9 +532,6 @@ screens = [
                     margin=0,
                 ),
                 *create_group_boxes(),
-                widget.WindowName(
-                    background=BACKGROUND,
-                ),
                 widget.Spacer(
                     bar.STRETCH,
                 ),
@@ -535,7 +574,7 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
-        ), 
+        ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
         left=bar.Gap(size=GAP_SIZE),
@@ -546,8 +585,15 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
