@@ -31,7 +31,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from qtile_extras import widget
-from qtile_extras.widget.decorations import PowerLineDecoration
+from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 
 
 mod = "mod4"
@@ -44,6 +44,9 @@ BORDER_SIZE = 2
 WALLPAPER = "~/.config/qtile/wallpaper.png"
 ICONS_DIR = "~/Pictures/icons/"
 SCRIPTS_DIR = "~/.config/qtile/scripts"
+
+
+FONT = "NotoSans Nerd Font"
 
 
 @hook.subscribe.startup
@@ -234,7 +237,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="NotoSans Nerd Font",
+    font=FONT,
     fontsize=16,
     padding=5,
     margin=2,
@@ -260,6 +263,7 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["1"],
+            **create_rect_decoration(),
         ),
         widget.GroupBox(
             highlight_method="text",
@@ -272,6 +276,7 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["2", "3", "4", "5"],
+            **create_rect_decoration(),
         ),
         widget.GroupBox(
             highlight_method="text",
@@ -284,6 +289,7 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["6"],
+            **create_rect_decoration(),
         ),
         widget.GroupBox(
             highlight_method="text",
@@ -296,6 +302,7 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["7"],
+            **create_rect_decoration(),
         ),
         widget.GroupBox(
             highlight_method="text",
@@ -308,6 +315,7 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["8"],
+            **create_rect_decoration(),
         ),
         widget.GroupBox(
             highlight_method="text",
@@ -320,34 +328,54 @@ def create_group_boxes() -> list:
             active=FOREGROUND_LIGHT,
             inactive=GRAY,
             visible_groups=["9"],
+            **create_rect_decoration(),
         ),
     ]
 
 
 def create_spacer() -> list:
     """Returns the spacer with added left and right decorations"""
+    padding_y = 0
     return [
         widget.TextBox(
             " ",
             background=BACKGROUND,
-            decorations=[PowerLineDecoration(path="rounded_right")],
+            decorations=[
+                PowerLineDecoration(path="rounded_right", padding_y=padding_y)
+            ],
         ),
         widget.TextBox(
             " ",
             background=MANTLE,
-            decorations=[PowerLineDecoration(path="rounded_right")],
+            decorations=[
+                PowerLineDecoration(path="rounded_right", padding_y=padding_y)
+            ],
         ),
         widget.Spacer(
             bar.STRETCH,
             background=CRUST,
-            decorations=[PowerLineDecoration(path="rounded_left")],
+            decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
         ),
         widget.TextBox(
             " ",
             background=MANTLE,
-            decorations=[PowerLineDecoration(path="rounded_left")],
+            decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
         ),
     ]
+
+
+def create_rect_decoration() -> dict:
+    return {
+        "decorations": [
+            RectDecoration(
+                colour=MANTLE,
+                radius=10,
+                filled=True,
+                padding_y=4,
+                group=True,
+            )
+        ]
+    }
 
 
 screens = [
@@ -363,65 +391,78 @@ screens = [
                     foreground=ROSEWATER,
                     fontsize=24,
                     margin=0,
+                    **create_rect_decoration(),
                 ),
                 *create_group_boxes(),
                 widget.StatusNotifier(),
                 *create_spacer(),
-                widget.Sep(
-                    linewidth=0,
+                widget.TextBox(
+                    " ",
                 ),
                 widget.WidgetBox(
                     text_closed="",
                     text_open="",
                     close_button_location="right",
                     foreground=FLAMINGO,
+                    **create_rect_decoration(),
                     widgets=[
                         widget.WiFiIcon(
                             active_colour=FLAMINGO,
                             disconnected_colour=FLAMINGO,
                             inactive_colour=FLAMINGO,
                             padding_y=8,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.Net(
                             format="{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.TextBox(
                             "",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.CPU(
                             format=" {load_percent}%",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.TextBox(
                             "",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.Memory(
                             format=" {MemPercent}%",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.TextBox(
                             "󰖙",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                         widget.OpenWeather(
                             location="Kraków",
                             format=" {temp}°C",
                             foreground=FLAMINGO,
+                            **create_rect_decoration(),
                         ),
                     ],
                 ),
@@ -430,52 +471,64 @@ screens = [
                     text_closed="",
                     text_open="",
                     close_button_location="right",
+                    **create_rect_decoration(),
                     widgets=[
                         widget.TextBox(
                             "󰕾",
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.Volume(
                             fmt="{}",
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.TextBox(
                             "󰌌",
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.KeyboardLayout(
                             configured_keyboards=["us", "pl"],
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.CurrentLayoutIcon(
                             use_mask=True,
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                             scale=0.5,
                         ),
                         widget.CurrentLayout(
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                         widget.Sep(
                             linewidth=0,
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
                         ),
                     ],
                 ),
                 widget.TextBox(
                     "󰃭",
                     foreground=MAUVE,
+                    **create_rect_decoration(),
                 ),
                 widget.Clock(
                     format="%Y-%m-%d",
                     foreground=MAUVE,
+                    **create_rect_decoration(),
                 ),
                 widget.AnalogueClock(
                     face_shape="circle",
@@ -487,10 +540,12 @@ screens = [
                     minute_size=1,
                     margin=12,
                     adjust_y=-5,
+                    **create_rect_decoration(),
                 ),
                 widget.Clock(
                     format="%H:%M",
                     foreground=GREEN,
+                    **create_rect_decoration(),
                 ),
                 widget.UPowerWidget(
                     border_colour=YELLOW,
@@ -500,6 +555,7 @@ screens = [
                     fill_normal=YELLOW,
                     fill_critical=RED,
                     fill_charge=FLAMINGO,
+                    **create_rect_decoration(),
                 ),
                 widget.Battery(
                     format="{char} {percent:2.0%}",
@@ -509,19 +565,23 @@ screens = [
                     empty_char="󰚌",
                     full_char="󱐋",
                     foreground=YELLOW,
+                    **create_rect_decoration(),
                 ),
                 widget.TextBox(
                     "󰐥",
                     foreground=RED,
+                    **create_rect_decoration(),
                     margin=3,
                 ),
                 widget.QuickExit(
                     default_text="Exit",
                     countdown_format="{} s",
                     foreground=RED,
+                    **create_rect_decoration(),
                 ),
                 widget.Sep(
                     linewidth=0,
+                    **create_rect_decoration(),
                 ),
             ],
             32,
@@ -545,6 +605,7 @@ screens = [
             [
                 widget.Sep(
                     linewidth=0,
+                    **create_rect_decoration(),
                 ),
                 widget.TextBox(
                     "󰣇",
@@ -552,20 +613,25 @@ screens = [
                     foreground=ROSEWATER,
                     fontsize=24,
                     margin=0,
+                    **create_rect_decoration(),
                 ),
                 *create_group_boxes(),
                 *create_spacer(),
+                widget.TextBox(" "),
                 widget.TextBox(
                     "󰥔",
                     foreground=GREEN,
+                    **create_rect_decoration(),
                 ),
                 widget.Clock(
                     format="%H:%M",
                     foreground=GREEN,
+                    **create_rect_decoration(),
                 ),
                 widget.TextBox(
                     "󰁹",
                     foreground=YELLOW,
+                    **create_rect_decoration(),
                 ),
                 widget.Battery(
                     format="{char} {percent:2.0%}",
@@ -575,14 +641,17 @@ screens = [
                     empty_char="󰚌",
                     full_char="󱐋",
                     foreground=YELLOW,
+                    **create_rect_decoration(),
                 ),
                 widget.TextBox(
                     "󰍹  Off",
                     foreground=RED,
                     mouse_callbacks={"Button1": turn_off_laptop_screen},
+                    **create_rect_decoration(),
                 ),
                 widget.Sep(
                     linewidth=0,
+                    **create_rect_decoration(),
                 ),
             ],
             32,
