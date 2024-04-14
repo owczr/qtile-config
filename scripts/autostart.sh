@@ -18,3 +18,7 @@ redshift -l 50.06143:19.93658 &
 
 # start dunst for notifications
 dunst &
+
+# start script to check battery level every minute
+# and turn off the PC if it's less than 5%
+./poweroff_on_low_battery.sh &
