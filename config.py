@@ -351,11 +351,17 @@ def create_spacer() -> list:
                 PowerLineDecoration(path="rounded_right", padding_y=padding_y)
             ],
         ),
-        widget.Spacer(
-            bar.STRETCH,
+        widget.WindowName(
+            foreground="#bac2de",
+            fontsize=14,
             background=CRUST,
             decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
         ),
+        # widget.Spacer(
+        #     bar.STRETCH,
+        #     background=CRUST,
+        #     decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
+        # ),
         widget.TextBox(
             " ",
             background=MANTLE,
@@ -410,6 +416,10 @@ screens = [
                 *create_spacer(),
                 widget.TextBox(
                     " ",
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    **create_rect_decoration(),
                 ),
                 widget.WidgetBox(
                     text_closed="",
