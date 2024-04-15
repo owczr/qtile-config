@@ -30,6 +30,7 @@ from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile.widget import backlight
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
 
@@ -150,6 +151,16 @@ keys = [
     # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([alt], "space", open_rofi(), desc="Spawn Rofi"),
     Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker"),
+    Key(
+        [],
+        "XF86MonBrightnessUp",
+        lazy.widget["backlight"].change_backlight(backlight.ChangeDirection.UP),
+    ),
+    Key(
+        [],
+        "XF86MonBrightnessDown",
+        lazy.widget["backlight"].change_backlight(backlight.ChangeDirection.DOWN),
+    ),
 ]
 
 groups = [
@@ -547,6 +558,18 @@ screens = [
                         ),
                         widget.CurrentLayout(
                             foreground=ROSEWATER,
+                            **create_rect_decoration(),
+                        ),
+                        widget.TextBox(
+                            "",
+                            foreground=ROSEWATER,
+                            **create_rect_decoration(),
+                        ),
+                        widget.Backlight(
+                            backlight_name="intel_backlight",
+                            scroll=True,
+                            foreground=ROSEWATER,
+                            change_command="light -S {0}",
                             **create_rect_decoration(),
                         ),
                         widget.Sep(
