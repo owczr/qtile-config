@@ -122,6 +122,7 @@ SKY = "#89dceb"
 PEACH = "#fab387"
 ACCENT = BLUE
 SURFACE_0 = "#313244"
+SUBTEXT = "#bac2de"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -341,39 +342,74 @@ def create_spacer() -> list:
         widget.Sep(
             linewidth=0,
             background=BACKGROUND,
-            padding=10,
+            padding=1,
             decorations=[
                 PowerLineDecoration(path="rounded_right", padding_y=padding_y)
             ],
         ),
-        widget.TextBox(
+        widget.Sep(
             linewidth=0,
             background=MANTLE,
+            padding=1,
             decorations=[
-                PowerLineDecoration(path="rounded_right", padding_y=padding_y, shift=15)
+                PowerLineDecoration(path="rounded_right", padding_y=padding_y)
             ],
         ),
         widget.WindowName(
-            foreground="#bac2de",
+            foreground=SUBTEXT,
             fontsize=14,
             background=CRUST,
             decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
         ),
-        # widget.Spacer(
-        #     bar.STRETCH,
-        #     background=CRUST,
-        #     decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
-        # ),
-        widget.TextBox(
+        widget.Sep(
             linewidth=0,
             background=MANTLE,
+            padding=1,
             decorations=[
                 PowerLineDecoration(
                     path="rounded_left",
                     padding_y=padding_y,
-                    shift=15,
                 )
             ],
+        ),
+    ]
+
+
+def create_separator() -> list:
+    """Returns a list with widgets that create a nice separator"""
+    return [
+        widget.Sep(
+            linewidth=0,
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=10,
+            background=BACKGROUND,
+            decorations=[
+                PowerLineDecoration(
+                    path="rounded_left",
+                    shift=10,
+                    ignore_extrawidth=True,
+                ),
+            ],
+        ),
+        widget.Sep(
+            linewidth=0,
+            background=SURFACE_0,
+        ),
+        widget.Sep(
+            linewidth=0,
+            background=SURFACE_0,
+            decorations=[
+                PowerLineDecoration(
+                    path="rounded_right",
+                    shift=5,
+                    ignore_extrawidth=True,
+                ),
+            ],
+        ),
+        widget.Sep(
+            linewidth=0,
         ),
     ]
 
@@ -428,10 +464,9 @@ screens = [
                     padding=8,
                     **create_rect_decoration(),
                 ),
+                *create_separator(),
                 *create_spacer(),
-                widget.TextBox(
-                    " ",
-                ),
+                *create_separator(),
                 widget.Sep(
                     linewidth=0,
                     padding=10,
@@ -615,6 +650,11 @@ screens = [
                     default_text="Exit",
                     countdown_format="{} s",
                     foreground=RED,
+                    **create_rect_decoration(),
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    padding=10,
                     **create_rect_decoration(),
                 ),
                 widget.Sep(
