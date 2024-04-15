@@ -26,7 +26,7 @@
 import os
 import subprocess
 
-from libqtile import bar, layout, hook
+from libqtile import backend, bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -121,6 +121,7 @@ PINK = "#f5c2e7"
 SKY = "#89dceb"
 PEACH = "#fab387"
 ACCENT = BLUE
+SURFACE_0 = "#313244"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -390,6 +391,8 @@ screens = [
             [
                 widget.Sep(
                     linewidth=0,
+                    background=SURFACE_0,
+                    decorations=[PowerLineDecoration(path="rounded_right")],
                 ),
                 widget.TextBox(
                     "󰣇",
@@ -603,7 +606,19 @@ screens = [
                 ),
                 widget.Sep(
                     linewidth=0,
-                    **create_rect_decoration(),
+                    padding=10,
+                    background=BACKGROUND,
+                    decorations=[
+                        PowerLineDecoration(
+                            path="rounded_left",
+                            shift=10,
+                            ignore_extrawidth=True,
+                        ),
+                    ],
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    background=SURFACE_0,
                 ),
             ],
             32,
