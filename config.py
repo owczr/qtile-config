@@ -161,6 +161,16 @@ keys = [
         "XF86MonBrightnessDown",
         lazy.widget["backlight"].change_backlight(backlight.ChangeDirection.DOWN),
     ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.widget["volume"].decrease_vol(),
+    ),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.widget["volume"].increase_vol(),
+    ),
 ]
 
 groups = [
