@@ -338,18 +338,19 @@ def create_spacer() -> list:
     """Returns the spacer with added left and right decorations"""
     padding_y = 0
     return [
-        widget.TextBox(
-            " ",
+        widget.Sep(
+            linewidth=0,
             background=BACKGROUND,
+            padding=10,
             decorations=[
                 PowerLineDecoration(path="rounded_right", padding_y=padding_y)
             ],
         ),
         widget.TextBox(
-            " ",
+            linewidth=0,
             background=MANTLE,
             decorations=[
-                PowerLineDecoration(path="rounded_right", padding_y=padding_y)
+                PowerLineDecoration(path="rounded_right", padding_y=padding_y, shift=15)
             ],
         ),
         widget.WindowName(
@@ -364,9 +365,15 @@ def create_spacer() -> list:
         #     decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
         # ),
         widget.TextBox(
-            " ",
+            linewidth=0,
             background=MANTLE,
-            decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
+            decorations=[
+                PowerLineDecoration(
+                    path="rounded_left",
+                    padding_y=padding_y,
+                    shift=15,
+                )
+            ],
         ),
     ]
 
@@ -376,9 +383,9 @@ def create_rect_decoration() -> dict:
         "decorations": [
             RectDecoration(
                 colour=MANTLE,
-                radius=10,
+                radius=16,
                 filled=True,
-                padding_y=4,
+                padding_y=0,
                 group=True,
             )
         ]
@@ -393,6 +400,11 @@ screens = [
                     linewidth=0,
                     background=SURFACE_0,
                     decorations=[PowerLineDecoration(path="rounded_right")],
+                ),
+                widget.Sep(
+                    linewidth=0,
+                    padding=10,
+                    **create_rect_decoration(),
                 ),
                 widget.TextBox(
                     "󰣇",
@@ -422,6 +434,7 @@ screens = [
                 ),
                 widget.Sep(
                     linewidth=0,
+                    padding=10,
                     **create_rect_decoration(),
                 ),
                 widget.WidgetBox(
