@@ -26,7 +26,7 @@
 import os
 import subprocess
 
-from libqtile import backend, bar, layout, hook
+from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -55,48 +55,12 @@ def run_on_startup():
     subprocess.call([script])
 
 
-def open_chromium():
-    return lazy.spawn("chromium")
-
-
 def open_rofi():
     return lazy.spawn("rofi -show drun -show-icons")
 
 
 def open_rofimoji():
     return lazy.spawn("rofimoji -a clipboard")
-
-
-def open_terminal():
-    return lazy.spawn("alacritty")
-
-
-def open_thunderbird():
-    return lazy.spawn("thunderbird")
-
-
-def open_vscode():
-    return lazy.spawn("codium")
-
-
-def open_discord():
-    return lazy.spawn("discord")
-
-
-def open_nemo():
-    return lazy.spawn("nemo")
-
-
-def open_spotify():
-    return lazy.spawn("spotify-launcher")
-
-
-def open_todoist():
-    return lazy.spawn("todoist")
-
-
-def open_obsidian():
-    return lazy.spawn("obsidian")
 
 
 def turn_off_laptop_screen():
