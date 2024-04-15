@@ -403,7 +403,6 @@ def create_separator() -> list:
             decorations=[
                 PowerLineDecoration(
                     path="rounded_right",
-                    shift=5,
                     ignore_extrawidth=True,
                 ),
             ],
