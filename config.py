@@ -39,12 +39,14 @@ mod = "mod4"
 alt = "mod1"
 terminal = guess_terminal()
 
+# variables
+is_muted = False
 
 # constants
 GAP_SIZE = 4
 BORDER_SIZE = 2
 WALLPAPER = "~/.config/qtile/wallpaper.png"
-ICONS_DIR = "~/Pictures/icons/"
+ICONS_DIR = "/usr/share/icons/Catppuccin-SE"
 SCRIPTS_DIR = "~/.config/qtile/scripts"
 IMAGE_PADDING = 5
 
@@ -64,8 +66,8 @@ RED = "#f38ba8"
 YELLOW = "#f9e2af"
 GREEN = "#a6e3a1"
 BLUE = "#89b4fa"
-SAPPHIRE="#74c7ec"
-LAVENDER="#b4befe"
+SAPPHIRE = "#74c7ec"
+LAVENDER = "#b4befe"
 ROSEWATER = "#f5e0dc"
 FLAMINGO = "#f2cdcd"
 PINK = "#f5c2e7"
@@ -94,6 +96,103 @@ def open_rofimoji():
 def turn_off_laptop_screen():
     script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
     subprocess.call([script])
+
+
+def get_volume_icon(volume):
+    volume = int(volume[:-1])  # drop the % sign
+
+    if volume == 0:
+        icon = "notification-audio-volume-off.svg"
+    elif volume <= 33:
+        icon = "notification-audio-volume-low.svg"
+    elif volume <= 66:
+        icon = "notification-audio-volume-medium.svg"
+    else:
+        icon = "notification-audio-volume-high.svg"
+
+    return os.path.join(ICONS_DIR, "48x48", "status", icon)
+
+
+@lazy.function
+def increase_vol(qtile):
+    def change_volume():
+        """Helper function for volume wrappers"""
+        nonlocal qtile
+
+        script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "change_volume.sh"))
+
+        try:
+            completed_process = subprocess.run(
+                [script, "increase"], stdout=subprocess.PIPE, check=True
+            )
+
+            volume = completed_process.stdout.decode().strip()
+            icon = get_volume_icon(volume)
+
+            subprocess.run(["dunstctl", "close-all"], check=True)
+            subprocess.run(
+                ["notify-send", "Increased Volume", volume, "-i", icon], check=True
+            )
+        except subprocess.CalledProcessError as e:
+            qtile.log.error(f"Failed to increase volume or send notification:\n{e}")
+
+    qtile.call_soon(change_volume)
+
+
+@lazy.function
+def decrease_vol(qtile):
+    def change_volume():
+        """Helper function for volume wrappers"""
+        nonlocal qtile
+
+        script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "change_volume.sh"))
+        try:
+            completed_process = subprocess.run(
+                [script, "decrease"], stdout=subprocess.PIPE, check=True
+            )
+
+            volume = completed_process.stdout.decode().strip()
+            icon = get_volume_icon(volume)
+
+            subprocess.run(["dunstctl", "close-all"], check=True)
+            subprocess.run(
+                ["notify-send", "Decreased Volume", volume, "-i", icon], check=True
+            )
+        except subprocess.CalledProcessError as e:
+            qtile.log.error(f"Failed to decrease volume or send notification:\n{e}")
+
+    qtile.call_soon(change_volume)
+
+
+@lazy.function
+def mute_vol(qtile):
+    global is_muted
+    is_muted = not is_muted
+
+    def change_volume():
+        """Helper function for volume wrappers"""
+        nonlocal qtile
+
+        script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "change_volume.sh"))
+        try:
+            completed_process = subprocess.run(
+                [script, "mute"], stdout=subprocess.PIPE, check=True
+            )
+
+            if is_muted:
+                icon = os.path.join(
+                    ICONS_DIR, "48x48", "status", "notification-audio-volume-muted.svg"
+                )
+            else:
+                volume = completed_process.stdout.decode().strip()
+                icon = get_volume_icon(volume)
+
+            subprocess.run(["dunstctl", "close-all"], check=True)
+            subprocess.run(["notify-send", "Toggled Mute", "-i", icon], check=True)
+        except subprocess.CalledProcessError as e:
+            qtile.log.error(f"Failed to toggle mute or send notification:\n{e}")
+
+    qtile.call_soon(change_volume)
 
 
 keys = [
@@ -171,17 +270,17 @@ keys = [
     Key(
         [],
         "XF86AudioLowerVolume",
-        lazy.widget["volume"].decrease_vol(),
+        decrease_vol(),
     ),
     Key(
         [],
         "XF86AudioRaiseVolume",
-        lazy.widget["volume"].increase_vol(),
+        increase_vol(),
     ),
     Key(
         [],
         "XF86AudioMute",
-        lazy.widget["volume"].mute(),
+        mute_vol(),
     ),
 ]
 
