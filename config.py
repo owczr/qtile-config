@@ -64,6 +64,8 @@ RED = "#f38ba8"
 YELLOW = "#f9e2af"
 GREEN = "#a6e3a1"
 BLUE = "#89b4fa"
+SAPPHIRE="#74c7ec"
+LAVENDER="#b4befe"
 ROSEWATER = "#f5e0dc"
 FLAMINGO = "#f2cdcd"
 PINK = "#f5c2e7"
@@ -216,7 +218,11 @@ layouts = [
         border_on_single=True,
     ),
     layout.Max(
+        border_focus=SAPPHIRE,
+        border_width=BORDER_SIZE,
         margin=GAP_SIZE,
+        border_normal=GRAY,
+        border_on_single=True,
     ),
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -771,9 +777,11 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_focus=ACCENT,
-    border_width=3,
+    border_focus=LAVENDER,
+    border_width=BORDER_SIZE,
+    margin=GAP_SIZE,
     border_normal=GRAY,
+    border_on_single=True,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
