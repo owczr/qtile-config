@@ -815,9 +815,14 @@ screens = [
                     foreground=GREEN,
                     **create_rect_decoration(),
                 ),
-                widget.TextBox(
-                    "󰁹",
-                    foreground=YELLOW,
+                widget.UPowerWidget(
+                    border_colour=YELLOW,
+                    border_charge_colour=YELLOW,
+                    border_critical_colour=RED,
+                    fill_low=PEACH,
+                    fill_normal=YELLOW,
+                    fill_critical=RED,
+                    fill_charge=FLAMINGO,
                     **create_rect_decoration(),
                 ),
                 widget.Battery(
@@ -851,6 +856,8 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
+            border_color=GRAY,
+            border_width=2,
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
