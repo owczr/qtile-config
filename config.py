@@ -40,35 +40,19 @@ alt = "mod1"
 terminal = guess_terminal()
 
 
+# constants
 GAP_SIZE = 4
 BORDER_SIZE = 2
 WALLPAPER = "~/.config/qtile/wallpaper.png"
 ICONS_DIR = "~/Pictures/icons/"
 SCRIPTS_DIR = "~/.config/qtile/scripts"
+IMAGE_PADDING = 5
 
 
 FONT = "NotoSans Nerd Font"
 
 
-@hook.subscribe.startup
-def run_on_startup():
-    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "autostart.sh"))
-    subprocess.call([script])
-
-
-def open_rofi():
-    return lazy.spawn("rofi -show drun -show-icons")
-
-
-def open_rofimoji():
-    return lazy.spawn("rofimoji -a clipboard")
-
-
-def turn_off_laptop_screen():
-    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
-    subprocess.call([script])
-
-
+# colorscheme
 CRUST = "#11111b"
 MANTLE = "#181825"
 BACKGROUND = "#1e1e2e"
@@ -88,6 +72,27 @@ PEACH = "#fab387"
 ACCENT = BLUE
 SURFACE_0 = "#313244"
 SUBTEXT = "#bac2de"
+
+
+# functions
+@hook.subscribe.startup
+def run_on_startup():
+    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "autostart.sh"))
+    subprocess.call([script])
+
+
+def open_rofi():
+    return lazy.spawn("rofi -show drun -show-icons")
+
+
+def open_rofimoji():
+    return lazy.spawn("rofimoji -a clipboard")
+
+
+def turn_off_laptop_screen():
+    script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "turn_off_laptop_screen.sh"))
+    subprocess.call([script])
+
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -148,7 +153,7 @@ keys = [
     ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([alt], "space", open_rofi(), desc="Spawn Rofi"),
     Key([mod], "period", open_rofimoji(), desc="Spawn emoji picker"),
     Key(
@@ -207,6 +212,8 @@ layouts = [
         border_focus=ACCENT,
         border_width=BORDER_SIZE,
         margin=GAP_SIZE,
+        border_normal=GRAY,
+        border_on_single=True,
     ),
     layout.Max(
         margin=GAP_SIZE,
@@ -233,9 +240,8 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-IMAGE_PADDING = 5
 
-
+# bar widget functions
 def create_group_boxes() -> list:
     """Returns a list with GroupBox widgets in Pacman style"""
     return [
@@ -340,6 +346,12 @@ def create_spacer() -> list:
                 PowerLineDecoration(path="rounded_right", padding_y=padding_y)
             ],
         ),
+        widget.Prompt(
+            background=CRUST,
+            foreground=SUBTEXT,
+            fontsize=14,
+            decorations=[PowerLineDecoration(path="rounded_left", padding_y=padding_y)],
+        ),
         widget.WindowName(
             foreground=SUBTEXT,
             fontsize=14,
@@ -368,26 +380,12 @@ def create_separator() -> list:
         ),
         widget.Sep(
             linewidth=0,
-            padding=10,
+            padding=0,
             background=BACKGROUND,
             decorations=[
                 PowerLineDecoration(
                     path="rounded_left",
                     shift=10,
-                    ignore_extrawidth=True,
-                ),
-            ],
-        ),
-        widget.Sep(
-            linewidth=0,
-            background=SURFACE_0,
-        ),
-        widget.Sep(
-            linewidth=0,
-            background=SURFACE_0,
-            decorations=[
-                PowerLineDecoration(
-                    path="rounded_right",
                     ignore_extrawidth=True,
                 ),
             ],
@@ -416,11 +414,6 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.Sep(
-                    linewidth=0,
-                    background=SURFACE_0,
-                    decorations=[PowerLineDecoration(path="rounded_right")],
-                ),
                 widget.Sep(
                     linewidth=0,
                     padding=10,
@@ -603,12 +596,14 @@ screens = [
                     face_shape="circle",
                     face_background=GREEN,
                     face_border_colour=GREEN,
+                    face_border_width=0,
                     hour_colour=BACKGROUND,
                     hour_size=1,
                     minute_colour=BACKGROUND,
                     minute_size=1,
-                    margin=12,
-                    adjust_y=-5,
+                    minute_length=0.95,
+                    margin=15,
+                    adjust_y=-8,
                     **create_rect_decoration(),
                 ),
                 widget.Clock(
@@ -653,22 +648,6 @@ screens = [
                     padding=10,
                     **create_rect_decoration(),
                 ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=10,
-                    background=BACKGROUND,
-                    decorations=[
-                        PowerLineDecoration(
-                            path="rounded_left",
-                            shift=10,
-                            ignore_extrawidth=True,
-                        ),
-                    ],
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    background=SURFACE_0,
-                ),
             ],
             32,
             background=BACKGROUND,
@@ -679,6 +658,8 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
+            border_color=GRAY,
+            border_width=2,
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
@@ -691,6 +672,7 @@ screens = [
             [
                 widget.Sep(
                     linewidth=0,
+                    padding=10,
                     **create_rect_decoration(),
                 ),
                 widget.TextBox(
@@ -704,9 +686,18 @@ screens = [
                 *create_group_boxes(),
                 *create_spacer(),
                 widget.TextBox(" "),
-                widget.TextBox(
-                    "󰥔",
-                    foreground=GREEN,
+                widget.AnalogueClock(
+                    face_shape="circle",
+                    face_background=GREEN,
+                    face_border_colour=GREEN,
+                    face_border_width=0,
+                    hour_colour=BACKGROUND,
+                    hour_size=1,
+                    minute_colour=BACKGROUND,
+                    minute_size=1,
+                    minute_length=0.95,
+                    margin=15,
+                    adjust_y=-8,
                     **create_rect_decoration(),
                 ),
                 widget.Clock(
@@ -737,6 +728,7 @@ screens = [
                 ),
                 widget.Sep(
                     linewidth=0,
+                    padding=10,
                     **create_rect_decoration(),
                 ),
             ],
