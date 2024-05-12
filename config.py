@@ -178,6 +178,11 @@ keys = [
         "XF86AudioRaiseVolume",
         lazy.widget["volume"].increase_vol(),
     ),
+    Key(
+        [],
+        "XF86AudioMute",
+        lazy.widget["volume"].mute(),
+    ),
 ]
 
 groups = [
