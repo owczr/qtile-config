@@ -113,6 +113,77 @@ def get_volume_icon(volume):
     return os.path.join(ICONS_DIR, "48x48", "status", icon)
 
 
+def get_brightness_icon(brightness):
+    if brightness == 0:
+        icon = "notification-display-brightness-off.svg"
+    elif brightness <= 33:
+        icon = "notification-display-brightness-low.svg"
+    elif brightness <= 66:
+        icon = "notification-display-brightness-medium.svg"
+    elif brightness <= 99:
+        icon = "notification-display-brightness-high.svg"
+    else:
+        icon = "notification-display-brightness-full.svg"
+
+    return os.path.join(ICONS_DIR, "48x48", "status", icon)
+
+
+@lazy.function
+def increase_brightness(qtile):
+    def change_brightness():
+        """Helper function for brightness wrappers"""
+        nonlocal qtile
+
+        script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "change_backlight.sh"))
+
+        try:
+            completed_process = subprocess.run(
+                [script, "increase"], stdout=subprocess.PIPE, check=True
+            )
+
+            brightness = completed_process.stdout.decode().strip()[:4]
+            brightness = int(float(brightness) * 100)
+            icon = get_brightness_icon(brightness)
+
+            subprocess.run(["dunstctl", "close-all"], check=True)
+            subprocess.run(
+                ["notify-send", "Increased Brightness", f"{brightness}%", "-i", icon],
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            qtile.log.error(f"Failed to increase brightness or send notification:\n{e}")
+
+    qtile.call_soon(change_brightness)
+
+
+@lazy.function
+def decrease_brightness(qtile):
+    def change_brightness():
+        """Helper function for brightness wrappers"""
+        nonlocal qtile
+
+        script = os.path.expanduser(os.path.join(SCRIPTS_DIR, "change_backlight.sh"))
+
+        try:
+            completed_process = subprocess.run(
+                [script, "decrease"], stdout=subprocess.PIPE, check=True
+            )
+
+            brightness = completed_process.stdout.decode().strip()[:4]
+            brightness = int(float(brightness) * 100)
+            icon = get_brightness_icon(brightness)
+
+            subprocess.run(["dunstctl", "close-all"], check=True)
+            subprocess.run(
+                ["notify-send", "Decreased Brightness", f"{brightness}%", "-i", icon],
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            qtile.log.error(f"Failed to decrease brightness or send notification:\n{e}")
+
+    qtile.call_soon(change_brightness)
+
+
 @lazy.function
 def increase_vol(qtile):
     def change_volume():
@@ -260,12 +331,12 @@ keys = [
     Key(
         [],
         "XF86MonBrightnessUp",
-        lazy.widget["backlight"].change_backlight(backlight.ChangeDirection.UP),
+        increase_brightness(),
     ),
     Key(
         [],
         "XF86MonBrightnessDown",
-        lazy.widget["backlight"].change_backlight(backlight.ChangeDirection.DOWN),
+        decrease_brightness(),
     ),
     Key(
         [],
