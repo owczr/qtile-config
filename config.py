@@ -603,6 +603,7 @@ screens = [
                 widget.Sep(
                     linewidth=0,
                     padding=10,
+                    background=MANTLE,
                     **create_rect_decoration(),
                 ),
                 widget.TextBox(
@@ -788,8 +789,8 @@ screens = [
                     minute_colour=BACKGROUND,
                     minute_size=1,
                     minute_length=0.95,
-                    margin=15,
-                    adjust_y=-8,
+                    margin=10,
+                    adjust_y=-2,
                     **create_rect_decoration(),
                 ),
                 widget.Clock(
@@ -832,6 +833,7 @@ screens = [
                 widget.Sep(
                     linewidth=0,
                     padding=10,
+                    background=MANTLE,
                     **create_rect_decoration(),
                 ),
             ],
@@ -839,13 +841,13 @@ screens = [
             background=BACKGROUND,
             opacity=0.9,
             margin=[
-                GAP_SIZE * 2,
-                GAP_SIZE * 2,
+                0,  # GAP_SIZE * 2,
+                0,  # GAP_SIZE * 2,
                 GAP_SIZE,
-                GAP_SIZE * 2,
+                0,  # GAP_SIZE * 2,
             ],
             border_color=GRAY,
-            border_width=2,
+            border_width=0,
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
