@@ -85,6 +85,10 @@ def run_on_startup():
     subprocess.call([script])
 
 
+def lock_screen():
+    return lazy.spawn("betterlockscreen -l dimblur")
+
+
 def open_rofi():
     return lazy.spawn("rofi -show drun -show-icons")
 
@@ -353,6 +357,7 @@ keys = [
         "XF86AudioMute",
         mute_vol(),
     ),
+    Key(["control", "shift"], "l", lock_screen()),
 ]
 
 groups = [
