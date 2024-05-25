@@ -43,7 +43,7 @@ is_muted = False
 
 # constants
 GAP_SIZE = 4
-BORDER_SIZE = 2
+BORDER_SIZE = 1
 WALLPAPER = "~/.config/qtile/wallpaper.png"
 ICONS_DIR = "/usr/share/icons/Catppuccin-SE"
 SCRIPTS_DIR = "~/.config/qtile/scripts"
@@ -789,7 +789,7 @@ screens = [
                     minute_size=1,
                     minute_length=0.95,
                     margin=15,
-                    adjust_y=-8,
+                    adjust_y=-6,
                     **create_rect_decoration(),
                 ),
                 widget.Clock(
@@ -836,7 +836,7 @@ screens = [
                     **create_rect_decoration(),
                 ),
             ],
-            32,
+            34,
             background=BACKGROUND,
             opacity=0.9,
             margin=[
@@ -845,8 +845,8 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
-            border_color=MANTLE,
-            border_width=2,
+            border_color=GRAY,
+            border_width=BORDER_SIZE,
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
@@ -884,7 +884,7 @@ screens = [
                     minute_size=1,
                     minute_length=0.95,
                     margin=15,
-                    adjust_y=-8,
+                    adjust_y=-6,
                     **create_rect_decoration(),
                 ),
                 widget.Clock(
@@ -924,7 +924,7 @@ screens = [
                     **create_rect_decoration(),
                 ),
             ],
-            32,
+            34,
             background=BACKGROUND,
             opacity=0.9,
             margin=[
@@ -933,8 +933,8 @@ screens = [
                 GAP_SIZE,
                 GAP_SIZE * 2,
             ],
-            border_color=CRUST,
-            border_width=2,
+            border_color=GRAY,
+            border_width=BORDER_SIZE,
         ),
         wallpaper=WALLPAPER,
         wallpaper_mode="stretch",
