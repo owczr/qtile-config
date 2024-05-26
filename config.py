@@ -690,6 +690,23 @@ screens = [
                             **create_rect_decoration(),
                         ),
                         widget.TextBox(
+                            "",
+                            foreground=FLAMINGO,
+                            **create_rect_decoration(),
+                        ),
+                        widget.DF(
+                            foreground=FLAMINGO,
+                            warn_color=RED,
+                            visible_on_warn=False,
+                            format="{uf}{m}, {r:.0f}%",
+                            **create_rect_decoration(),
+                        ),
+                        widget.Sep(
+                            linewidth=0,
+                            foreground=FLAMINGO,
+                            **create_rect_decoration(),
+                        ),
+                        widget.TextBox(
                             "󰖙",
                             foreground=FLAMINGO,
                             **create_rect_decoration(),
